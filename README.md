@@ -3,6 +3,9 @@
 📌 Overview
 Fake reviews are a growing problem in eCommerce and online platforms, misleading customers and damaging trust. This project aims to detect fake reviews using Machine Learning (ML) by analyzing text patterns, sentiment, and other linguistic features. The model classifies reviews as genuine or fake based on trained data, helping platforms ensure review authenticity.
 
+![Image](https://github.com/user-attachments/assets/11762483-fa66-41e7-9763-6200cee21941)
+![Image](https://github.com/user-attachments/assets/ee89b5df-5771-48d2-b7e1-bd43946711b8)
+
 📂 Dataset
 Uses a publicly available dataset or a custom dataset of labeled fake and real reviews.
 
