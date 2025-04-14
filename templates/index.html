@@ -12,6 +12,9 @@
     <!-- Font Awesome for Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
+    <!-- Chart.js for Graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- Custom Styles -->
     <style>
         body {
@@ -156,6 +159,11 @@
             height: 200px;
         }
 
+        /* Styling the chart */
+        #myChart {
+            margin-top: 30px;
+        }
+
     </style>
 </head>
 
@@ -184,40 +192,137 @@
                 <textarea class="form-control" name="review" rows="4" placeholder="Type your review here..." required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Analyze Review</button>
-            
         </form>
 
-        {% if prediction_text %}
-            <div class="result {% if prediction_class == 'fake' %}fake{% else %}real{% endif %}">
-                <i class="fas {% if prediction_class == 'fake' %}fa-times-circle{% else %}fa-check-circle{% endif %}"></i>
-                {{ prediction_text }}
+	{% if prediction_text %}
+    <div class="result {% if prediction_class == 'fake' %}fake{% else %}real{% endif %}">
+        <i class="fas {% if prediction_class == 'fake' %}fa-times-circle{% else %}fa-check-circle{% endif %}"></i>
+        {{ prediction_text }}
+    </div>
+{% endif %}
+
+<!-- Chart for Fake vs Real Reviews -->
+        <canvas id="myChart" width="400" height="200"></canvas>
+
+        <!-- Prediction result will be shown here -->
+       
+            
+                
             </div>
-        {% endif %}
+        
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <p>&copy; 2025 Fake Review Detector | <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
-    </div>
+
+
+        
+    
 
     <!-- Bootstrap JS & Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom JS for Tooltip and Form Animation -->
+    <!-- Chart.js Script -->
     <script>
-        // Enable tooltips
-        var tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        });
+        // Dummy data for Fake vs Real reviews
+        const data = {
+            labels: ['Real Reviews', 'Fake Reviews'],
+            datasets: [{
+                label: 'Review Analysis',
+                data: [12, 5], // Replace with dynamic data from your model
+                backgroundColor: ['#36A2EB', '#FF6384'],
+                borderColor: ['#36A2EB', '#FF6384'],
+                borderWidth: 1
+            }]
+        };
 
-        // Form submission loading effect
-        const form = document.getElementById('review-form');
-        form.addEventListener('submit', function () {
-            form.classList.add('loading');
+        // Create the chart
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar', // You can change the type to 'line', 'pie', etc.
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
     </script>
+
+
+
+
+<!-- Sentiment Analysis Chart -->
+<div class="container text-center mt-5">
+    <h4>Sentiment Analysis</h4>
+    <canvas id="sentimentChart" width="400" height="200"></canvas>
+</div>
+
+<!-- Word Cloud -->
+<div class="container text-center mt-5">
+    <h4>Most Frequent Words</h4>
+<div style="text-align: left;">
+    <p color: black;">worst</p>
+    <p color: black;">fake</p>
+    <p color: black;">scam</p>
+    <p color: black;">terrible</p>
+    <p color: black;">bad</p>
+</div>
+
+</div>
+
+<!-- Bootstrap JS & Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Chart.js for Sentiment Chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- WordCloud.js Library for Word Cloud -->
+<script src="https://cdn.jsdelivr.net/npm/wordcloud"></script>
+
+<script>
+    // Sentiment Analysis Chart (Pie Chart Example)
+    const sentimentData = {
+        labels: ['Positive', 'Neutral', 'Negative'],
+        datasets: [{
+            label: 'Sentiment Breakdown',
+            data: [60, 30, 10], // Example data: Replace with your sentiment analysis results
+            backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+            borderColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+            borderWidth: 1
+        }]
+    };
+
+    const ctxSentiment = document.getElementById('sentimentChart').getContext('2d');
+    const sentimentChart = new Chart(ctxSentiment, {
+        type: 'pie',
+        data: sentimentData
+    });
+
+    // Word Cloud Example (Use an external library for word cloud generation)
+    const wordCloudData = [
+        { text: "great", weight: 15 },
+        { text: "service", weight: 10 },
+        { text: "product", weight: 8 },
+        { text: "fake", weight: 5 },
+        { text: "quality", weight: 7 }
+    ];
+
+    const wordCloud = new WordCloud(document.getElementById('wordCloud'), {
+        list: wordCloudData
+    });
+</script>
+
+<!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Fake Review Detector | <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+    </div>
+
+</body>
+</html>
+
 
 </body>
 
